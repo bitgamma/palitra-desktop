@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Palette</title>
+  <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans|Tajawal:300" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="app.scss">
+</head>
+<body>
+<div class="app__container group">
+  <div class="app__keyboard-container group">
+    <ul class="app__pages group">
+      <li class="app__page"><a class="app__page-link app__page-link-1" href="#">1</a></li>
+      <li class="app__page"><a class="app__page-link app__page-link-2" href="#">2</a></li>
+      <li class="app__page"><a class="app__page-link app__page-link-3" href="#">3</a></li>
+      <li class="app__page"><a class="app__page-link app__page-link-4" href="#">4</a></li>
+    </ul>
+    <div class="app__keyboard-buttons group">
+      <li class="app__keyboard-button-columm column-left">
+        <a class="app__keyboard-button-link" href="#"></a>
+        <a class="app__keyboard-button-link" href="#"></a>
+        <a class="app__keyboard-button-link" href="#"></a>
+      </li>
+      <li class="app__keyboard-button-columm column-center">
+        <a class="app__keyboard-button-link" href="#"></a>
+        <a class="app__keyboard-button-link" href="#"></a>
+        <a class="app__keyboard-button-link" href="#"></a>
+      </li>
+      <li class="app__keyboard-button-columm column-right group">
+        <a class="app__keyboard-button-link" href="#"></a>
+        <a class="app__keyboard-button-link" href="#"></a>
+        <a class="app__keyboard-button-link" href="#"></a>
+      </li>
+    </div>
+  </div>
+</div>
+<script>
+  // You can also require other files to run in this process
+  require('./renderer.js')
+</script>
+</body>
+</html>

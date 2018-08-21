@@ -1,0 +1,23 @@
+{
+  "name": "palette-desktop",
+  "version": "1.0.0",
+  "description": "Palette configuration util",
+  "main": "entry.js",
+  "scripts": {
+    "start": "electron .",
+    "postinstall": "electron-rebuild --force"
+  },
+  "author": "Bitgamma",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^2.0.7",
+    "electron-compilers": "^5.9.0",
+    "electron-rebuild": "^1.8.2",
+    "node-hid": "^0.7.3",
+    "node-sass": "^4.9.3"
+  },
+  "dependencies": {
+    "electron-compile": "^6.4.3",
+    "node-hid": "^0.7.3"
+  }
+}
