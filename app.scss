@@ -99,35 +99,46 @@ input[disabled="disabled"], input[disabled="disabled"]:hover {
 
 .app__page-link {
   background: $text-color;
-  display: block;
   width: 45px;
   height: 45px;
   text-align: center;
   margin: 0 auto;
-  line-height: 3.2em;
   border-radius: 0.3em;
   border: 1px solid #444;
   border-bottom-color: #555;
+  box-shadow: 0 0.2em 0 0.05em rgb(70, 70, 70);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:active {
+    background: #2a2a2a;
+    color: #aaa;
+    position: relative;
+    top: 0.2em;
+    box-shadow: 0 0 0 0.05em black;
+  }
+
+  & span span {
+    display: block;
+    line-height: .7em;
+  }
 }
 
 .app__page-link-1 {
-  box-shadow: 0 0.2em 0 0.05em #212eee;
-  text-shadow: 1px 1px 2px black, 0 0 .7em #212eee;
+  color: #212eee;
 }
 
 .app__page-link-2 {
-  box-shadow: 0 0.2em 0 0.05em #1cce3e;
-  text-shadow: 1px 1px 2px black, 0 0 .7em #1cce3e;
+  color: #1cce3e;
 }
 
 .app__page-link-3 {
-  box-shadow: 0 0.2em 0 0.05em firebrick;
-  text-shadow: 1px 1px 2px black, 0 0 .7em firebrick;
+  color: firebrick;
 }
 
 .app__page-link-4 {
-  box-shadow: 0 0.2em 0 0.05em blueviolet;
-  text-shadow: 1px 1px 2px black, 0 0 .7em blueviolet;
+  color: blueviolet;
 }
 
 .app__keyboard-button-columm {
@@ -141,14 +152,35 @@ input[disabled="disabled"], input[disabled="disabled"]:hover {
   width: 80px;
   height: 80px;
   background: $text-color;
-  display: block;
   margin: 3em auto;
   border-radius: 0.3em;
   border: 1px solid #444;
   border-bottom-color: #555;
   box-shadow: 0 0.2em 0 0.05em rgb(70, 70, 70);
+  text-align: center;
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .75em;
+
+  &:active {
+    background: #2a2a2a;
+    color: #aaa;
+    position: relative;
+    top: 0.2em;
+    box-shadow: 0 0 0 0.05em black;
+  }
 }
 
 .column-center {
   width: 50%;
+}
+
+.active-page {
+  background: #2a2a2a;
+  color: #aaa;
+  position: relative;
+  top: 0.2em;
+  box-shadow: 0 0 0 0.05em black;
 }
