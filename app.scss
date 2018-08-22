@@ -3,6 +3,7 @@ $secondary-font: 'IBM Plex Sans', sans-serif;
 $text-color: #333;
 $keyboard-color: rgb(30, 30, 30);
 $keyboard-btn-text-color: white;
+$keyboard-shadow-color: #2a2a2a;
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -112,7 +113,7 @@ input[disabled="disabled"], input[disabled="disabled"]:hover {
   justify-content: center;
 
   &:active {
-    background: #2a2a2a;
+    background: $keyboard-shadow-color;
     color: #aaa;
     position: relative;
     top: 0.2em;
@@ -165,7 +166,7 @@ input[disabled="disabled"], input[disabled="disabled"]:hover {
   font-size: .75em;
 
   &:active {
-    background: #2a2a2a;
+    background: $keyboard-shadow-color;
     color: #aaa;
     position: relative;
     top: 0.2em;
@@ -178,9 +179,45 @@ input[disabled="disabled"], input[disabled="disabled"]:hover {
 }
 
 .active-page {
-  background: #2a2a2a;
+  background: $keyboard-shadow-color;
   color: #aaa;
   position: relative;
   top: 0.2em;
   box-shadow: 0 0 0 0.05em black;
+}
+
+.app__popup-overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.3);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.app__popup-overlay-targeted {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup {
+  padding: 1em;
+  box-sizing: border-box;
+  background: $keyboard-shadow-color;
+  border-radius: 5px;
+  width: 500px;
+  height: 300px;
+  position: relative;
+  transition: all 1s ease-in-out;
+  color: white;
+}
+
+.close-btn {
+  float: right;
+  color: white;
 }
