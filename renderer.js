@@ -6,7 +6,7 @@ let devices = HID.devices();
 let pageLinks = document.getElementsByClassName('app__page-link');
 let buttonLinks = document.getElementsByClassName("app__keyboard-button-link");
 let activePage = 0;
-const reportID = 0x01;
+const reportID = 0x02;
 const cmdRead = 0x00;
 const cmdWrite = 0x01;
 const buttonCount = 9;
@@ -16,7 +16,7 @@ let shortcut;
 let position;
 
 let deviceInfo = devices.find((d) => {
-  return (d.vendorId === 0x1209) && (d.productId === 0x0BAB) && (d.usagePage === 0xFF00);
+  return (d.vendorId === 0x1209) && (d.productId === 0x0BAB);
 });
 
 let readButton = (pageNumber, buttonNumber, device) => {
@@ -124,12 +124,12 @@ if (deviceInfo) {
         }
       };
 
-      document.getElementById("button-ok").addEventListener("click", () => {
+      document.getElementById("button-ok").onclick = () => {
         let buttonNumber = Number(buttonLinks[i].dataset.button);
         writeButton(activePage, buttonNumber, device, shortcut);
         readButton(activePage, buttonNumber, device);
         closeShortcutInput();
-      });
+      };
     })
   }
 
