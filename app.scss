@@ -1,9 +1,9 @@
 $main-font: 'Tajawal', sans-serif;
 $secondary-font: 'IBM Plex Sans', sans-serif;
-$text-color: #333;
-$keyboard-color: rgb(30, 30, 30);
+$text-color: rgb(44, 49, 54);
+$keyboard-color: rgb(28, 33, 37);
 $keyboard-btn-text-color: white;
-$keyboard-shadow-color: #2a2a2a;
+$keyboard-shadow-color: rgb(34, 39, 44);
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -83,12 +83,12 @@ input[disabled="disabled"], input[disabled="disabled"]:hover {
 
 .app__keyboard-container {
   background: $keyboard-color;
-  width: 50%;
+  width: 100%;
   margin: 0;
   color: $keyboard-btn-text-color;
   padding: 2em 3.5em 1em 3.5em;
   height: 100vh;
-  float: right;
+  box-sizing: border-box;
 }
 
 .app__page {
@@ -117,7 +117,7 @@ input[disabled="disabled"], input[disabled="disabled"]:hover {
     color: #aaa;
     position: relative;
     top: 0.2em;
-    box-shadow: 0 0 0 0.05em black;
+    box-shadow: 0 0 0 0.05em rgb(60, 60, 60);
   }
 
   & span span {
@@ -170,7 +170,7 @@ input[disabled="disabled"], input[disabled="disabled"]:hover {
     color: #aaa;
     position: relative;
     top: 0.2em;
-    box-shadow: 0 0 0 0.05em black;
+    box-shadow: 0 0 0 0.05em rgb(60, 60, 60);
   }
 }
 
@@ -183,7 +183,7 @@ input[disabled="disabled"], input[disabled="disabled"]:hover {
   color: #aaa;
   position: relative;
   top: 0.2em;
-  box-shadow: 0 0 0 0.05em black;
+  box-shadow: 0 0 0 0.05em rgb(60, 60, 60);
 }
 
 .app__popup-overlay {
@@ -192,7 +192,7 @@ input[disabled="disabled"], input[disabled="disabled"]:hover {
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(0, 0, 0, 0.5);
   transition: opacity 500ms;
   visibility: hidden;
   opacity: 0;
@@ -209,15 +209,53 @@ input[disabled="disabled"], input[disabled="disabled"]:hover {
   padding: 1em;
   box-sizing: border-box;
   background: $keyboard-shadow-color;
-  border-radius: 5px;
-  width: 500px;
-  height: 300px;
+  border-radius: 7px;
+  width: 400px;
+  height: 420px;
   position: relative;
   transition: all 1s ease-in-out;
-  color: white;
 }
 
-.close-btn {
-  float: right;
+.popup-content {
   color: white;
+  font-size: 1.4em;
+  line-height: 1.4em;
+  width: 80%;
+  margin: .5em auto;
+}
+
+.shortcut-cmd {
+  display: block;
+  padding: .5em 0 .1em 0;
+  border-bottom: 1px solid white;
+  text-align: center;
+}
+
+.popup-buttons-container {
+  position: absolute;
+  bottom: 1.5em;
+  width: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app__popup-button {
+  background: $text-color;
+  color: white;
+  padding: .6em 0 .4em 0;
+  text-align: center;
+  width: 70px;
+  display: inline-block;
+  margin: 0 .3em;
+  border: 1px solid rgb(28, 33, 37);
+  border-radius: 4px;
+}
+
+.app__popup-msg {
+  text-align: center;
+  font-style: italic;
+  color: white;
+  padding-top: 1em;
+  font-size: .9em;
 }
