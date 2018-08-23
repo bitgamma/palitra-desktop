@@ -32,8 +32,7 @@ let writeButton = (pageNumber, buttonNumber, device, shortcut) => {
   cmd[2] = pageNumber;
   cmd[3] = buttonNumber;
   cmd.set(shortcut, 4);
-  console.log(cmd);
-  device.write(cmd);
+  device.write(Array.from(cmd));
 };
 
 let hasKey = (shortcut, code) => {
