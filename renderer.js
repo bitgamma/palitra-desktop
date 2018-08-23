@@ -19,9 +19,13 @@ let deviceInfo = devices.find((d) => {
   return (d.vendorId === 0x1209) && (d.productId === 0x0BAB) && (d.usagePage === 0xFF00);
 });
 
+let readButton = (pageNumber, buttonNumber, device) => {
+  device.write([reportID, cmdRead, pageNumber, buttonNumber]);
+};
+
 let readPage = (pageNumber, device) => {
   for (let i = 0; i < buttonCount; i++) {
-    device.write([reportID, cmdRead, pageNumber, i]);
+    readButton(pageNumber, i, device);
   }
 };
 
@@ -121,13 +125,14 @@ if (deviceInfo) {
       };
 
       document.getElementById("button-ok").addEventListener("click", () => {
-        writeButton(activePage, buttonLinks[i].dataset.button, device, shortcut);
+        let buttonNumber = Number(buttonLinks[i].dataset.button);
+        writeButton(activePage, buttonNumber, device, shortcut);
+        readButton(activePage, buttonNumber, device);
         closeShortcutInput();
       });
     })
   }
 
-  document.getElementById("button-cancel").addEventListener("click", () => closeShortcutInput);
-
+  document.getElementById("button-cancel").addEventListener("click", closeShortcutInput);
   document.getElementById("button-clear").addEventListener("click", clearShortcut);
 }
