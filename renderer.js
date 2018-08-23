@@ -16,7 +16,7 @@ let shortcut;
 let position;
 
 let deviceInfo = devices.find((d) => {
-  return (d.vendorId === 0x1209) && (d.productId === 0x0BAB);
+  return (d.vendorId === 0x1209) && (d.productId === 0x0BAB) && (process.platform !== "win32" || d.usagePage === 0xFF00);
 });
 
 let readButton = (pageNumber, buttonNumber, device) => {
