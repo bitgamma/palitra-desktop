@@ -2,21 +2,31 @@
   "name": "palette-desktop",
   "version": "1.0.0",
   "description": "Palette configuration util",
-  "main": "entry.js",
+  "main": "src/main.js",
   "scripts": {
-    "start": "electron .",
-    "postinstall": "electron-rebuild --force"
+    "compile": "node-sass scss --output css",
+    "start": "npm run compile && electron .",
+    "pack": "npm run compile && electron-builder --dir",
+    "dist": "npm run compile && electron-builder",
+    "postinstall": "electron-builder install-app-deps"
   },
-  "author": "Bitgamma",
-  "license": "CC0-1.0",
+  "author": "Bitgamma OÜ",
+  "repository": "https://github.com/bitgamma/palette-desktop",
+  "license": "Apache-2.0",
   "devDependencies": {
+    "electron-builder": "^20.28.2",
     "electron": "^2.0.8",
-    "electron-compilers": "^5.9.0",
-    "electron-rebuild": "^1.8.2",
     "node-sass": "^4.9.3"
   },
   "dependencies": {
-    "electron-compile": "^6.4.3",
     "node-hid": "bitgamma/node-hid"
+  },
+  "build": {
+    "appId": "com.bitgamma.palette-desktop",
+    "productName": "Palette",
+    "files": ["!scss/*", "!palette-desktop.iml"],
+    "mac": {
+      "category": "public.app-category.utilities"
+    }
   }
 }
