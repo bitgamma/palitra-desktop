@@ -24,7 +24,10 @@
   "build": {
     "appId": "com.bitgamma.palette-desktop",
     "productName": "Palette",
-    "files": ["!scss/*", "!palette-desktop.iml"],
+    "files": [
+      "!scss/*",
+      "!palette-desktop.iml"
+    ],
     "mac": {
       "category": "public.app-category.utilities"
     }
