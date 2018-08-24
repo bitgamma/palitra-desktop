@@ -29,7 +29,11 @@
       "!palette-desktop.iml"
     ],
     "mac": {
-      "category": "public.app-category.utilities"
+      "category": "public.app-category.utilities",
+      "target": ["zip"]
+    },
+    "win": {
+      "target": ["nsis", "portable"]
     }
   }
 }
