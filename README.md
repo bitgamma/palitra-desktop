@@ -1,4 +1,3 @@
-# palette-desktop
-Palette configuration application
+# Palitra
 
-Tool to configure the [Palette](https://github.com/bitgamma/palette-desktop) device
+Tool to configure the [Palitra](https://github.com/bitgamma/palitra) device
