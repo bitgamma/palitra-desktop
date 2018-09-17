@@ -18,13 +18,13 @@ const reportLength = 11;
 let body = document.querySelector('body');
 let shortcut;
 let position;
-let updateWindow;
+let hasConnected = false;
 
 let handleBootLoaderConnection = () => {
-   updateWindow = new BrowserWindow({
+   let updateWindow = new BrowserWindow({
      width: 450,
      height: 300,
-     rame: false,
+     frame: false,
      parent: electron.remote.getCurrentWindow(),
      modal: true
   });
@@ -36,6 +36,12 @@ let jumpBootLoader = (device) => {
 };
 
 let handleConnection = () => {
+  // Workaround a problem with macOS and node-hid where reconnecting does not work.
+  if (hasConnected) {
+    electron.remote.getCurrentWindow().reload();
+    return;
+  }
+
   let devices = HID.devices(0x1209, 0x0BAB);
   let deviceInfo = devices.find((d) => (process.platform !== "win32" || d.usagePage === 0xFF00));
   handleLayout(deviceInfo);
@@ -97,6 +103,7 @@ let closeShortcutInput = () => {
 
 let handleDevice = (deviceInfo) => {
   let device = new HID.HID(deviceInfo.path);
+  hasConnected = true;
   device.on("data", (data) => {
     if (data[0] === reportID) {
       if (data[1] === cmdVersion) {
@@ -135,7 +142,7 @@ let handleDevice = (deviceInfo) => {
       readPage(activePage, device);
       e.preventDefault();
     })
-  };
+  }
 
   for (let i = 0; i < buttonLinks.length; i++) {
     buttonLinks[i].addEventListener("click", (e) => {
@@ -178,7 +185,8 @@ let handleDevice = (deviceInfo) => {
         }
       };
 
-      document.getElementById("button-ok").onclick = () => {
+      document.getElementById("button-ok").onclick = (e) => {
+        e.preventDefault();
         let buttonNumber = Number(buttonLinks[i].dataset.button);
         writeButton(activePage, buttonNumber, device, shortcut);
         readButton(activePage, buttonNumber, device);

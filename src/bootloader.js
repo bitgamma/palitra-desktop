@@ -18,7 +18,8 @@ let bootLoaderConnect = () => {
     bootloader.close();
   });
 
-  document.getElementById("close-upd-window").onclick = () => {
+  document.getElementById("close-upd-window").onclick = (e) => {
+    e.preventDefault();
     w.close();
     hidWrite(bootloader, [cmdReset]);
   };
