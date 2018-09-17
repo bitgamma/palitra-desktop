@@ -18,7 +18,18 @@ let position;
 let handleConnection = () => {
   let devices = HID.devices(0x1209, 0x0BAB);
   let deviceInfo = devices.find((d) => (process.platform !== "win32" || d.usagePage === 0xFF00));
+  handleLayout(deviceInfo);
   handleDevice(deviceInfo);
+};
+
+let handleLayout = (device) => {
+  if(device) {
+    document.getElementById("device-plugged-layout").style.display = "inherit";
+    document.getElementById("device-unplugged-layout").style.display = "none";
+  } else {
+    document.getElementById("device-plugged-layout").style.display = "none";
+    document.getElementById("device-unplugged-layout").style.display = "inherit";
+  }
 };
 
 let readButton = (pageNumber, buttonNumber, device) => {
@@ -73,9 +84,10 @@ let handleDevice = (deviceInfo) => {
     }
   });
 
-  device.on("error", (err) => {
+  device.on("error", () => {
     usbDetect.find(0x1209, 0x0BAB, handleConnection);
-    console.log(err);
+    device.close();
+    handleLayout();
   });
 
   readPage(activePage, device);
@@ -144,6 +156,7 @@ let handleDevice = (deviceInfo) => {
   document.getElementById("button-clear").addEventListener("click", clearShortcut);
 };
 
+handleLayout();
 usbDetect.startMonitoring();
 usbDetect.on("add:4617:2987", handleConnection);
 usbDetect.find(0x1209, 0x0BAB, (err, devices) => {
