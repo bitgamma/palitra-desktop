@@ -1,8 +1,8 @@
 let keyboard = require('./keyboard.json');
 let js_keyboard = require('./js_keyboard.json');
+let usbDetect = require('usb-detection');
 
 let HID = require('node-hid');
-let devices = HID.devices();
 let pageLinks = document.getElementsByClassName('app__page-link');
 let buttonLinks = document.getElementsByClassName("app__keyboard-button-link");
 let activePage = 0;
@@ -15,9 +15,11 @@ let body = document.querySelector('body');
 let shortcut;
 let position;
 
-let deviceInfo = devices.find((d) => {
-  return (d.vendorId === 0x1209) && (d.productId === 0x0BAB) && (process.platform !== "win32" || d.usagePage === 0xFF00);
-});
+let handleConnection = () => {
+  let devices = HID.devices(0x1209, 0x0BAB);
+  let deviceInfo = devices.find((d) => (process.platform !== "win32" || d.usagePage === 0xFF00));
+  handleDevice(deviceInfo);
+};
 
 let readButton = (pageNumber, buttonNumber, device) => {
   device.write([reportID, cmdRead, pageNumber, buttonNumber]);
@@ -58,7 +60,7 @@ let closeShortcutInput = () => {
   body.onkeydown = null;
 };
 
-if (deviceInfo) {
+let handleDevice = (deviceInfo) => {
   let device = new HID.HID(deviceInfo.path);
   device.on("data", (data) => {
     if (data[0] === reportID) {
@@ -71,6 +73,11 @@ if (deviceInfo) {
     }
   });
 
+  device.on("error", (err) => {
+    usbDetect.find(0x1209, 0x0BAB, handleConnection);
+    console.log(err);
+  });
+
   readPage(activePage, device);
 
   for (let i = 0; i < pageLinks.length; i++) {
@@ -81,7 +88,7 @@ if (deviceInfo) {
       readPage(activePage, device);
       e.preventDefault();
     })
-  }
+  };
 
   for (let i = 0; i < buttonLinks.length; i++) {
     buttonLinks[i].addEventListener("click", (e) => {
@@ -135,4 +142,12 @@ if (deviceInfo) {
 
   document.getElementById("button-cancel").addEventListener("click", closeShortcutInput);
   document.getElementById("button-clear").addEventListener("click", clearShortcut);
-}
+};
+
+usbDetect.startMonitoring();
+usbDetect.on("add:4617:2987", handleConnection);
+usbDetect.find(0x1209, 0x0BAB, (err, devices) => {
+  if (devices.length > 0) {
+    handleConnection();
+  }
+});

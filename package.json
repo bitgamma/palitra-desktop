@@ -19,7 +19,8 @@
     "node-sass": "^4.9.3"
   },
   "dependencies": {
-    "node-hid": "bitgamma/node-hid"
+    "node-hid": "bitgamma/node-hid",
+    "usb-detection": "^3.2.0"
   },
   "build": {
     "appId": "com.bitgamma.palette-desktop",
@@ -30,10 +31,15 @@
     ],
     "mac": {
       "category": "public.app-category.utilities",
-      "target": ["zip"]
+      "target": [
+        "zip"
+      ]
     },
     "win": {
-      "target": ["nsis", "portable"]
+      "target": [
+        "nsis",
+        "portable"
+      ]
     }
   }
 }
