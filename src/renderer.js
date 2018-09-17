@@ -85,7 +85,6 @@ let handleDevice = (deviceInfo) => {
   });
 
   device.on("error", () => {
-    usbDetect.find(0x1209, 0x0BAB, handleConnection);
     device.close();
     handleLayout();
   });
