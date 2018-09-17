@@ -272,3 +272,15 @@ input[disabled="disabled"], input[disabled="disabled"]:hover {
   padding-top: 40vh;
   box-sizing: border-box;
 }
+
+.app__update-msg {
+  text-align: center;
+  font-weight: bold;
+}
+
+.app__update-msg-link {
+  text-decoration: underline !important;
+  display: inline-block;
+  font-family: $secondary-font;
+  font-size: .9em;
+}

@@ -1,6 +1,8 @@
 let keyboard = require('./keyboard.json');
 let js_keyboard = require('./js_keyboard.json');
 let usbDetect = require('usb-detection');
+let electron = require('electron');
+let BrowserWindow = electron.remote.BrowserWindow;
 
 let HID = require('node-hid');
 let pageLinks = document.getElementsByClassName('app__page-link');
@@ -9,11 +11,29 @@ let activePage = 0;
 const reportID = 0x02;
 const cmdRead = 0x00;
 const cmdWrite = 0x01;
+const cmdVersion = 0x03;
+const cmdBoot = 0x02;
 const buttonCount = 9;
 const reportLength = 11;
 let body = document.querySelector('body');
 let shortcut;
 let position;
+let updateWindow;
+
+let handleBootLoaderConnection = () => {
+   updateWindow = new BrowserWindow({
+     width: 450,
+     height: 300,
+     rame: false,
+     parent: electron.remote.getCurrentWindow(),
+     modal: true
+  });
+  updateWindow.loadFile('update.html');
+};
+
+let jumpBootLoader = (device) => {
+  device.write([reportID, cmdBoot, 0xb0, 0x07]);
+};
 
 let handleConnection = () => {
   let devices = HID.devices(0x1209, 0x0BAB);
@@ -40,6 +60,10 @@ let readPage = (pageNumber, device) => {
   for (let i = 0; i < buttonCount; i++) {
     readButton(pageNumber, i, device);
   }
+};
+
+let readVersion = (device) => {
+  device.write([reportID, cmdVersion]);
 };
 
 let writeButton = (pageNumber, buttonNumber, device, shortcut) => {
@@ -75,6 +99,11 @@ let handleDevice = (deviceInfo) => {
   let device = new HID.HID(deviceInfo.path);
   device.on("data", (data) => {
     if (data[0] === reportID) {
+      if (data[1] === cmdVersion) {
+        let version = `${data[2] + (data[3]/100)}`;
+        console.log(data);
+        console.log(version);
+      }
       let shortcut = "";
       for (let i = 5; i < reportLength; i++) {
         if (data[i] === 0x00) break;
@@ -88,6 +117,13 @@ let handleDevice = (deviceInfo) => {
     device.close();
     handleLayout();
   });
+
+  document.getElementById("update-link").onclick = () => {
+    document.getElementById("update-message").style.display = "none";
+    jumpBootLoader(device);
+  };
+
+  readVersion(device);
 
   readPage(activePage, device);
 
@@ -158,6 +194,7 @@ let handleDevice = (deviceInfo) => {
 handleLayout();
 usbDetect.startMonitoring();
 usbDetect.on("add:4617:2987", handleConnection);
+usbDetect.on("add:1240:60", handleBootLoaderConnection);
 usbDetect.find(0x1209, 0x0BAB, (err, devices) => {
   if (devices.length > 0) {
     handleConnection();
