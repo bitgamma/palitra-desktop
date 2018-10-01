@@ -284,3 +284,20 @@ input[disabled="disabled"], input[disabled="disabled"]:hover {
   font-family: $secondary-font;
   font-size: .9em;
 }
+
+.app__upd-button {
+  background: $text-color;
+  font-size: .8em;
+  color: white;
+  padding: .6em 0 .4em 0;
+  text-align: center;
+  width: 140px;
+  display: inline-block;
+  margin: 0 .6em;
+  box-shadow: 0 3px 3px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  border-radius: 2px;
+}
+
+.app__update-buttons {
+  text-align: center;
+}

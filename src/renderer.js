@@ -22,13 +22,14 @@ let hasConnected = false;
 
 let handleBootLoaderConnection = () => {
    let updateWindow = new BrowserWindow({
-     width: 450,
-     height: 300,
+     width: 650,
+     height: 600,
      frame: false,
      parent: electron.remote.getCurrentWindow(),
      modal: true
   });
   updateWindow.loadFile('update.html');
+  updateWindow.webContents.openDevTools();
 };
 
 let jumpBootLoader = (device) => {
@@ -202,9 +203,14 @@ let handleDevice = (deviceInfo) => {
 handleLayout();
 usbDetect.startMonitoring();
 usbDetect.on("add:4617:2987", handleConnection);
-usbDetect.on("add:1240:60", handleBootLoaderConnection);
+usbDetect.on("add:4617:2988", handleBootLoaderConnection);
 usbDetect.find(0x1209, 0x0BAB, (err, devices) => {
   if (devices.length > 0) {
     handleConnection();
+  }
+});
+usbDetect.find(0x1209, 0x0BAC, (err, devices) => {
+  if (devices.length > 0) {
+    handleBootLoaderConnection();
   }
 });
