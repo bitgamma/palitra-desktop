@@ -9,6 +9,13 @@
 <body>
 <div class="app__container group">
   <div class="app__keyboard-container app__update-buttons group">
+    <div class="app__progress-bar-container group" id="progress-bar-container">
+      <div class="app__updating-progress">
+        <div class="app__updating-progress-bar" data-value="0" data-max="100"></div>
+      </div>
+      <div class="app__percentage">0%</div>
+    </div>
+    <small class="app__update-status" id="status"></small>
     <a href="#" id="start-upd" class="app__upd-button">Start update</a>
     <a href="#" id="close-upd-window" class="app__upd-button">Close update window</a>
   </div>

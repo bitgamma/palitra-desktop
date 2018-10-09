@@ -4,6 +4,12 @@ $text-color: rgb(44, 49, 54);
 $keyboard-color: rgb(28, 33, 37);
 $keyboard-btn-text-color: white;
 $keyboard-shadow-color: rgb(34, 39, 44);
+$color-green: #4cd964;
+$color-turquoise: #5ac8fa;
+$color-blue: #007aff;
+$color-light-blue: #34aadc;
+$color-purple: #5856d6;
+$color-red: #ff2d55;
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -276,6 +282,44 @@ input[disabled="disabled"], input[disabled="disabled"]:hover {
 .app__update-msg {
   text-align: center;
   font-weight: bold;
+}
+
+.app__progress-bar-container {
+  display: block;
+  width: 80%;
+  margin: 2em auto;
+}
+
+.app__updating-progress {
+  float: left;
+  width: 85%;
+  height: 4px;
+  background-color: rgba(0,0,0,0.15);
+  padding: 0 5px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border-radius: 10px;
+}
+
+.app__updating-progress-bar {
+  width: 0%;
+  height: 4px;
+  border-radius: 8px;
+  background-image: linear-gradient(to right, $color-green, $color-turquoise, $color-blue, $color-light-blue, $color-purple, $color-red);
+}
+
+.app__percentage {
+  float: right;
+  background-color: rgb(26, 103, 89);
+  border-radius: 15px;
+  height: 20px;
+  box-sizing: border-box;
+  width: 10%;
+  color: white;
+  font-size: 0.8rem;
+  text-align: center;
+  line-height: 20px !important;
+  margin: 0 0 0 10px;
 }
 
 .app__update-msg-link {

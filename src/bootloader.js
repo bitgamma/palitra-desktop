@@ -6,6 +6,7 @@ let cmdReset = 0x08;
 let cmdErase = 0x04;
 let cmdProgram = 0x05;
 let cmdProgramComplete = 0x06;
+let cmdGetData = 0x07;
 let cmdSignFlash = 0x09;
 
 let hidWrite = (bootloader, data) => {
@@ -16,6 +17,15 @@ let hidWrite = (bootloader, data) => {
   bootloader.write(data);
 };
 
+let prepareFWCmd = (entry, cmd, bufSize) => {
+  let buf = new ArrayBuffer(bufSize);
+  let dataView = new DataView(buf);
+  dataView.setUint8(0, cmd);
+  dataView.setUint32(1, entry[0], true);
+  dataView.setUint8(5, entry[1].length);
+  return new Uint8Array(buf);
+};
+
 let updateFirmware = (bootloader) => {
   fs.readFile('./palitra.X.production.hex', 'utf8', function(err, data) {
     if (err) throw err;
@@ -24,18 +34,26 @@ let updateFirmware = (bootloader) => {
     hidWrite(bootloader, [cmdErase]);
 
     for (let entry of fw.entries()) {
-        let buf = new ArrayBuffer(64);
-        let dataView = new DataView(buf);
-        dataView.setUint8(0, cmdProgram);
-        dataView.setUint32(1, entry[0], true);
-        dataView.setUint8(5, entry[1].length);
-        let cmd = new Uint8Array(buf);
-        cmd.set(entry[1], 64 - entry[1].length);
-        hidWrite(bootloader, Array.from(cmd));
+      let cmd = prepareFWCmd(entry, cmdProgram, 64);
+      cmd.set(entry[1], 64 - entry[1].length);
+      hidWrite(bootloader, Array.from(cmd));
     }
 
     hidWrite(bootloader, [cmdProgramComplete]);
-    //TODO: verify fw
+
+    for (let entry of fw.entries()) {
+      let cmd = prepareFWCmd(entry, cmdGetData, 6);
+      hidWrite(bootloader, Array.from(cmd));
+
+      let report = bootloader.readSync();
+      for (let i = 0; i < entry[1].length; i++) {
+        if (report[i + (64 - entry[1].length)] !== entry[1][i]) {
+          document.getElementById("status").innerHTML = "Update failed";
+          return;
+        }
+      }
+    }
+
     hidWrite(bootloader, [cmdSignFlash]);
   });
 };
